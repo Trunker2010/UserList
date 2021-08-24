@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RvApp">
         <activity
+            android:name=".AddUserActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true" />
+        <activity
             android:name=".UserInfoActivity"
             android:exported="true" />
         <activity

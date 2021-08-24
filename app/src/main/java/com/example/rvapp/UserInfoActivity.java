@@ -7,14 +7,14 @@ import android.widget.TextView;
 
 public class UserInfoActivity extends AppCompatActivity {
     TextView mTextView;
+    User mUser;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
-        String userName = getIntent().getStringExtra(Constants.USER_NAME_KEY);
+        mUser = (User) getIntent().getSerializableExtra(Constants.USER_KEY);
         mTextView = findViewById(R.id.userNameTV);
-        mTextView.setText(userName);
+        mTextView.setText(mUser.getUserName());
     }
 }

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RvApp</string>
+    <string name="Add">Добавить</string>
+    <string name="name">Имя</string>
+    <string name="phone">Телефон</string>
+    <string name="l_name">Фамилия</string>
 </resources>
