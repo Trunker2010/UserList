@@ -4,4 +4,7 @@
     <string name="name">Имя</string>
     <string name="phone">Телефон</string>
     <string name="l_name">Фамилия</string>
+    <string name="edite">Редактировать</string>
+    <string name="del">Удалить</string>
+    <string name="save">Сохранить</string>
 </resources>

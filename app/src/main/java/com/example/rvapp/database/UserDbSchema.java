@@ -1,6 +1,6 @@
 package com.example.rvapp.database;
 
-class UserDbSchema {
+public class UserDbSchema {
     public static final class UserTable{
         public static final String NAME = "users";
     }

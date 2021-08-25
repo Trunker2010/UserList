@@ -12,6 +12,10 @@ public class User implements Serializable {
         this.uuid = UUID.randomUUID();
     }
 
+    public User(UUID uuid) {
+        this.uuid = uuid;
+    }
+
     public String getUserName() {
         return userName;
     }
