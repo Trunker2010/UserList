@@ -24,7 +24,7 @@ class UserAdapter extends RecyclerView.Adapter<UserHolder> { // класс ад�
 
     @Override
     public void onBindViewHolder(@NonNull UserHolder holder, int position) { //передаем данные в холдер для заполнения
-        holder.bind(userList.get(position));
+        holder.bind(userList.get(position), position);
     }
 
     @Override

@@ -2,58 +2,55 @@ package com.example.rvapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.rvapp.database.UserRepository;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    RecyclerView mRecyclerView;
-    ArrayList<User> userList = new ArrayList<>();
-    Button addBtn;
-    private UserAdapter userAdapter;
-    UserRepository mUserRepository;
-    int tempSize;
-
+    FragmentManager fragmentManager = getSupportFragmentManager();
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mUserRepository = new UserRepository(MainActivity.this);
-        mRecyclerView = findViewById(R.id.rv);//находим наш RecyclerView
-        addBtn = findViewById(R.id.addBtn);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddUserActivity.class);
-                tempSize = userList.size();
-                startActivity(intent);
-            }
-        });
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this)); //устанавливаем LayoutManager - способ отображения списка
-        recyclerViewInit();
+        //Создаём фрагмент
+        Fragment fragment = new UserListFragment();
+        fragmentManager.beginTransaction().add(R.id.fragment_container, fragment,"main_fragment").commit();
     }
-
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (!userList.equals(mUserRepository.getUserList())) {
-            userList.clear();
-            userList.addAll(mUserRepository.getUserList());
-            userAdapter.notifyDataSetChanged();
+    public void onBackPressed(){
+        Fragment currentFragment = fragmentManager.findFragmentByTag("main_fragment");
+        if(currentFragment != null && currentFragment.isVisible()){
+            super.onBackPressed();
+        }else{
+            Fragment fragment = new UserListFragment();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container,fragment,"main_fragment").commit();
         }
     }
-
-    private void recyclerViewInit() {
-        userList = mUserRepository.getUserList();
-        userAdapter = new UserAdapter(userList);
-        mRecyclerView.setAdapter(userAdapter);
+    public static void changeFragment(View view, User user){
+        // Получаем хостинговую активность
+        FragmentActivity activity = (FragmentActivity) view.getContext();
+        // Создаём фрагмет менеджер
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+        //Создаём фрагмент
+        Fragment fragment = new UserInfoFragment();
+        // Создаём Bundle (это как коллекция)
+        Bundle bundle = new Bundle();
+        // Записываем пользователя в bundle
+        bundle.putSerializable("user", user);
+        // Добавляем bundle к фрагменту
+        fragment.setArguments(bundle);
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 }
 
